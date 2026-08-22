@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cgjxu6qhickj7"]
+
+[ext_resource type="PackedScene" uid="uid://td3wl50g2efk" path="res://Assets/Breaking News HD!!1!111!!!1!.fbx" id="1_jpq73"]
+
+[node name="Breaking News HD!!1!111!!!1!" unique_id=746365467 instance=ExtResource("1_jpq73")]

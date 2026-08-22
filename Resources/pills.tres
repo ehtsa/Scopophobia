@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="HealingPills" format=3 uid="uid://devc7ma0rme13"]
+
+[ext_resource type="PackedScene" uid="uid://ckgr11iyvq552" path="res://Scenes/interactables.tscn" id="1_qt7y6"]
+[ext_resource type="PackedScene" uid="uid://di6dvqkl4rpyl" path="res://Oxycodone.fbx" id="1_t7ede"]
+[ext_resource type="Texture2D" uid="uid://cferqilvctryn" path="res://Assets/pillThumbnail.png" id="2_qt7y6"]
+[ext_resource type="AudioStream" uid="uid://fhxgtev40vjb" path="res://Assets/PillSwallow.mp3" id="4_8t5jl"]
+[ext_resource type="Script" uid="uid://daqimvvc3nh1e" path="res://HealingPills.cs" id="4_qunoc"]
+
+[resource]
+script = ExtResource("4_qunoc")
+item_name = "Pills"
+icon = ExtResource("2_qt7y6")
+MeshScene = ExtResource("1_t7ede")
+metadata/_custom_type_script = "uid://b2j7fviswcs7o"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Polaroid" format=3 uid="uid://bhmsj8bphfif2"]
+
+[ext_resource type="PackedScene" uid="uid://ckgr11iyvq552" path="res://Scenes/interactables.tscn" id="1_kji30"]
+[ext_resource type="PackedScene" uid="uid://najmyn8jqwv1" path="res://Resources/PolaroidMesh.tscn" id="2_fb4hy"]
+[ext_resource type="Texture2D" uid="uid://cnn24ckmaxcbl" path="res://Assets/Polaroid_1-M6I2D8N10T11.png" id="2_kji30"]
+[ext_resource type="Script" uid="uid://dllu0bhh6ajnq" path="res://Polaroid.cs" id="3_fb4hy"]
+
+[resource]
+script = ExtResource("3_fb4hy")
+item_name = "Polaroid"
+icon = ExtResource("2_kji30")
+MeshScene = ExtResource("2_fb4hy")
+metadata/_custom_type_script = "uid://b2j7fviswcs7o"

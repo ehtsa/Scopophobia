@@ -1,0 +1,302 @@
+[gd_scene format=3 uid="uid://dad7bc4523ujr"]
+
+[ext_resource type="Script" uid="uid://bt6kdqpw5gke3" path="res://Player.cs" id="1_kpjcp"]
+[ext_resource type="PackedScene" uid="uid://d0ypm0v45pwdv" path="res://art/player.glb" id="1_wtcfe"]
+[ext_resource type="Script" uid="uid://bq0bddnmjv3bd" path="res://Viewmodel.cs" id="2_5ncpa"]
+[ext_resource type="AudioStream" uid="uid://dm48a1mlqbmd7" path="res://Assets/砂利の上を歩く.mp3" id="3_kne1u"]
+[ext_resource type="Shader" uid="uid://k8lmdfjuac17" path="res://Overlay.gdshader" id="3_wi0c6"]
+[ext_resource type="AudioStream" uid="uid://b2vi6bsc4pfbv" path="res://Assets/アスファルトの上を走る1.mp3" id="4_e80uo"]
+[ext_resource type="AudioStream" uid="uid://cj2wgaxtt077u" path="res://Assets/freesound_community-labored-breathing-sleeping-73258.mp3" id="5_cxr5p"]
+[ext_resource type="Script" uid="uid://cb30unr2p7lnw" path="res://PolaroidPhotoRig.cs" id="5_l6ohk"]
+[ext_resource type="AudioStream" uid="uid://nb57w2vgmsnv" path="res://Assets/金属バットで打つ1.mp3" id="6_tdg3f"]
+[ext_resource type="AudioStream" uid="uid://dgpqgoh0jtg7k" path="res://Assets/風鈴1.mp3" id="7_dtqjt"]
+[ext_resource type="Texture2D" uid="uid://ikmm651n3pg4" path="res://Assets/SolidBlack.webp" id="11_3tkgg"]
+[ext_resource type="Texture2D" uid="uid://ck8k612k3ra4w" path="res://Assets/PolaroidViewFinder3.png" id="11_glx4g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ge8gk"]
+render_priority = 0
+shader = ExtResource("3_wi0c6")
+shader_parameter/pixel_size = 2.0
+shader_parameter/levels = 13.0
+shader_parameter/gamma = Vector2(0.835, 1.24)
+
+[sub_resource type="QuadMesh" id="QuadMesh_qaf44"]
+material = SubResource("ShaderMaterial_ge8gk")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_03owx"]
+height = 1.0
+
+[sub_resource type="Animation" id="Animation_l6ohk"]
+resource_name = "CameraClick"
+
+[sub_resource type="Animation" id="Animation_wi0c6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Camera3D/Viewmodel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.515, -0.35, -0.7)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/ZoomOverlay:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Head/Camera3D/Viewmodel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Head/Camera3D:fov")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [75.0]
+}
+
+[sub_resource type="Animation" id="Animation_hp6x6"]
+resource_name = "Zoom"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Camera3D/Viewmodel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.515, -0.35, -0.7), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/ZoomOverlay:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Head/Camera3D/Viewmodel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0806),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Head/Camera3D:fov")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.098163895),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [75.0, 41.2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3tkgg"]
+_data = {
+&"CameraClick": SubResource("Animation_l6ohk"),
+&"RESET": SubResource("Animation_wi0c6"),
+&"Zoom": SubResource("Animation_hp6x6")
+}
+
+[node name="Player" type="CharacterBody3D" unique_id=447496943 node_paths=PackedStringArray("_viewmodel")]
+script = ExtResource("1_kpjcp")
+_viewmodel = NodePath("Head/Camera3D/Viewmodel")
+
+[node name="Head" type="Node3D" parent="." unique_id=1192839534]
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=1497261249]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.085)
+
+[node name="SeeCast" type="RayCast3D" parent="Head/Camera3D" unique_id=856668654]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.085)
+target_position = Vector3(0, 0, -5)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Head/Camera3D" unique_id=1899864279]
+light_color = Color(0.8943932, 0.7991311, 3.85046e-07, 1)
+light_energy = 4.0
+light_volumetric_fog_energy = 0.1
+spot_range = 100.0
+spot_angle_attenuation = 3.0314317
+
+[node name="Viewmodel" type="Node3D" parent="Head/Camera3D" unique_id=145511636]
+transform = Transform3D(1.53, 0, 0, 0, 1.53, 0, 0, 0, 1.53, 0.515, -0.35, -0.7)
+script = ExtResource("2_5ncpa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Head/Camera3D" unique_id=335252486]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_qaf44")
+
+[node name="Character" parent="Head" unique_id=889448574 instance=ExtResource("1_wtcfe")]
+
+[node name="PolaroidPhotoRig" type="Node3D" parent="Head" unique_id=1252580758 node_paths=PackedStringArray("PhotoViewport", "PhotoCamera")]
+script = ExtResource("5_l6ohk")
+PhotoViewport = NodePath("PhotoViewport")
+PhotoCamera = NodePath("PhotoViewport/PhotoCamera")
+
+[node name="PhotoViewport" type="SubViewport" parent="Head/PolaroidPhotoRig" unique_id=617925088]
+
+[node name="PhotoCamera" type="Camera3D" parent="Head/PolaroidPhotoRig/PhotoViewport" unique_id=232783712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.085)
+cull_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1855977173]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.436, 0)
+shape = SubResource("CapsuleShape3D_03owx")
+
+[node name="WalkingSound" type="AudioStreamPlayer" parent="." unique_id=1195079769]
+stream = ExtResource("3_kne1u")
+
+[node name="RunningSound" type="AudioStreamPlayer" parent="." unique_id=1800831469]
+stream = ExtResource("4_e80uo")
+
+[node name="BreathingSound" type="AudioStreamPlayer" parent="." unique_id=2121655787]
+stream = ExtResource("5_cxr5p")
+
+[node name="WindedSound" type="AudioStreamPlayer" parent="." unique_id=1236412210]
+stream = ExtResource("6_tdg3f")
+
+[node name="WindedClearSound" type="AudioStreamPlayer" parent="." unique_id=898491594]
+stream = ExtResource("7_dtqjt")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2123392434]
+
+[node name="ZoomOverlay" type="TextureRect" parent="CanvasLayer" unique_id=1095894330]
+modulate = Color(1, 1, 1, 0)
+show_behind_parent = true
+light_mask = 2
+visibility_layer = 2
+offset_left = -19.0
+offset_top = -650.0
+offset_right = 3954.0
+offset_bottom = 3323.0
+mouse_filter = 2
+texture = ExtResource("11_glx4g")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="CameraClick" type="TextureRect" parent="CanvasLayer" unique_id=932041491]
+visible = false
+show_behind_parent = true
+light_mask = 2
+visibility_layer = 2
+offset_left = -24.0
+offset_top = 1728.0
+offset_right = 3949.0
+offset_bottom = 5701.0
+mouse_filter = 2
+texture = ExtResource("11_3tkgg")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="StaminaBar" type="ColorRect" parent="CanvasLayer" unique_id=1815429344]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -408.0
+offset_top = -57.0
+offset_right = 392.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MentalHealthLabel" type="Label" parent="CanvasLayer" unique_id=229495981]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -466.0
+offset_top = -191.0
+offset_right = -38.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 125
+text = "100.0%"
+
+[node name="BoxContainer" type="BoxContainer" parent="CanvasLayer" unique_id=1572844487]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = -56.5
+offset_right = 421.00195
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InteractLabel" type="Label" parent="CanvasLayer/BoxContainer" unique_id=1645850167]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 40
+text = "Press F to Interact
+"
+
+[node name="Crosshair" type="Label" parent="CanvasLayer" unique_id=1538266719]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = " .
+"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1820129262]
+libraries/ = SubResource("AnimationLibrary_3tkgg")

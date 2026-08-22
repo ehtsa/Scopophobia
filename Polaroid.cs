@@ -1,0 +1,153 @@
+using Godot;
+using System.Collections.Generic;
+
+[GlobalClass]
+public partial class Polaroid : ItemData
+{
+	// The developed image. Set at runtime right after the shot resolves —
+	// deliberately not [Export]ed since it's never authored in the
+	// Inspector, only produced by PolaroidCamera.DevelopPhotoAsync().
+	public Texture2D Photo { get; set; }
+
+	// How long (in seconds) the photo takes to fully develop after being
+	// captured. Safe to [Export] and tweak per-template in the Inspector —
+	// it's a plain float, so Duplicate() copies it fine (unlike reference
+	// types such as the _photos list on PolaroidCamera).
+	[Export] public float DevelopDurationSeconds = 20.0f;
+
+	// How much of the tail end of DevelopDurationSeconds is spent visibly
+	// fading in. E.g. 20s total / 5s here = blank for the first 15s, then
+	// fades in linearly over the last 5s. Must be <= DevelopDurationSeconds.
+	[Export] public float FadeInDurationSeconds = 5.0f;
+
+	// Shake-to-develop-faster rate: every this-many pixels of cumulative
+	// vertical mouse movement (while shaking) shaves one second off the
+	// remaining development time. Lower = shaking matters more.
+	[Export] public float ShakePixelsPerSecondShaved = 50f;
+
+	// Timestamp (engine uptime, ms) of the moment this photo was captured.
+	// Deliberately not [Export]ed — same reasoning as Photo above: runtime
+	// only, always overwritten right after Duplicate() in
+	// PolaroidCamera.DevelopPhotoAsync(), never authored in the Inspector.
+	public ulong CapturedAtMsec { get; set; }
+
+	// 0 at the moment of capture, 1 once DevelopDurationSeconds has passed.
+	// Computed from wall-clock time rather than tracked per-frame, so a
+	// photo keeps developing whether or not it's the currently-held item.
+	// Note: Time.GetTicksMsec() ignores SceneTree.Paused, so development
+	// also continues while the game is paused. If you'd rather it freeze
+	// on pause, this needs to become delta-accumulation instead, which
+	// means tracking progress for photos that aren't currently displayed too.
+	public float DevelopProgress =>
+		Mathf.Clamp((float)(Time.GetTicksMsec() - CapturedAtMsec) / (DevelopDurationSeconds * 1000f), 0f, 1f);
+
+	public bool IsFullyDeveloped => DevelopProgress >= 1f;
+
+	public List<Mob> CapturedMobs = new();
+
+	// What the shader actually shows: 0 for the whole span before the fade
+	// window, then a linear 0→1 ramp across the final FadeInDurationSeconds.
+	// Reaches 1 at exactly the same moment DevelopProgress does, since the
+	// fade window is defined as the tail end of the total duration.
+	public float RevealProgress
+	{
+		get
+		{
+			float elapsedSeconds = DevelopProgress * DevelopDurationSeconds;
+			float fadeStart = DevelopDurationSeconds - FadeInDurationSeconds;
+			if (elapsedSeconds <= fadeStart) return 0f;
+			return Mathf.Clamp((elapsedSeconds - fadeStart) / FadeInDurationSeconds, 0f, 1f);
+		}
+	}
+
+	// Shaves development time off by walking CapturedAtMsec backwards —
+	// i.e. it makes DevelopProgress behave as though the photo had been
+	// captured earlier. Reuses the same clamped, wall-clock-based
+	// DevelopProgress everywhere else, so nothing downstream needs to know
+	// boosts happened at all. Safe to over-call: DevelopProgress just
+	// clamps at 1 (fully developed) rather than going negative or wrapping.
+	public void ApplyDevelopBoost(float secondsToShave)
+	{
+		if (secondsToShave <= 0f || IsFullyDeveloped) return;
+
+		ulong msecToShave = (ulong)(secondsToShave * 1000f);
+	
+		CapturedAtMsec = msecToShave > CapturedAtMsec ? 0 : CapturedAtMsec - msecToShave;
+		// GD.Print($"Shaved off {msecToShave} msecToShave now time is {CapturedAtMsec}");
+	}
+
+	// Converts a raw vertical mouse-motion delta (pixels, from an
+	// InputEventMouseMotion.Relative.Y) into a development-time boost.
+	// Call this from wherever you're reading shake input — see Player.cs.
+	public void ApplyShakeMotion(float verticalPixelsMoved)
+	{
+		ApplyDevelopBoost(Mathf.Abs(verticalPixelsMoved) / ShakePixelsPerSecondShaved);
+	}
+
+	// Shared across every Polaroid instance — loaded once.
+	// Adjust the path if you put the shader file somewhere else.
+	private static readonly Shader _photoShader = GD.Load<Shader>("res://polaroid_photo.gdshader");
+
+	public void RevealMobs()
+	{
+		if (CapturedMobs.Count == 0) return;
+
+		foreach (Mob mob in CapturedMobs)
+		{
+			if (IsInstanceValid(mob))
+				mob.OnPhotographed();
+		}
+		CapturedMobs.Clear();
+	}
+
+	public override bool Use(Player player)
+	{
+		if (!IsFullyDeveloped)
+		{
+			GD.Print("Still developing...");
+			return false;
+		}
+
+		RevealMobs();
+		return false;
+	}
+
+	public void CheckAutoReveal()
+	{
+		if (IsFullyDeveloped)
+			RevealMobs();
+	}
+
+	// Call this right after Viewmodel instantiates this item's MeshScene,
+	// so the physical mesh in the player's hand actually shows the photo —
+	// cropped to the top portion of the quad and faded in per DevelopProgress.
+	public void ApplyPhotoToMesh(Node3D meshRoot)
+	{
+		if (Photo == null) return;
+
+		var quad = meshRoot.GetNodeOrNull<MeshInstance3D>("PhotoQuad"); // match your mesh's actual node name
+		if (quad == null)
+		{
+			GD.PushWarning("Polaroid: couldn't find a 'PhotoQuad' node on the mesh instance.");
+			return;
+		}
+
+		var mat = new ShaderMaterial { Shader = _photoShader };
+		mat.SetShaderParameter("photo_texture", Photo);
+		mat.SetShaderParameter("develop_progress", RevealProgress);
+		quad.MaterialOverride = mat;
+	}
+
+	// Call every frame (or process tick) while this polaroid is the
+	// currently-held item and isn't fully developed, so the fade keeps
+	// animating in the player's hand. Safe to call repeatedly — becomes a
+	// no-op in effect once IsFullyDeveloped.
+	public void UpdateDevelopingVisual(Node3D meshRoot)
+	{
+		var quad = meshRoot.GetNodeOrNull<MeshInstance3D>("PhotoQuad");
+		if (quad?.MaterialOverride is ShaderMaterial mat)
+		{
+			mat.SetShaderParameter("develop_progress", RevealProgress);
+		}
+	}
+}

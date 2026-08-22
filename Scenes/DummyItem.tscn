@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://djw87vqk0junc"]
+
+[ext_resource type="Script" uid="uid://cfqkes18mf3kw" path="res://DummyItem.cs" id="1_irk3r"]
+[ext_resource type="AudioStream" uid="uid://bedpasv5sgbrw" path="res://Assets/fart-with-reverb_NcgStsA.mp3" id="2_mgj4e"]
+[ext_resource type="PackedScene" uid="uid://di6dvqkl4rpyl" path="res://Oxycodone.fbx" id="2_ttk4j"]
+[ext_resource type="Texture2D" uid="uid://bx37teduhey7c" path="res://Assets/catholding.webp" id="3_bstwh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6bt34"]
+
+[node name="DummyItem" type="StaticBody3D" unique_id=1336528834]
+script = ExtResource("1_irk3r")
+
+[node name="Model" parent="." unique_id=1392640410 instance=ExtResource("2_ttk4j")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.05, 0)
+
+[node name="CollisionLayer" type="CollisionShape3D" parent="." unique_id=617150807]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.115, 0)
+shape = SubResource("CapsuleShape3D_6bt34")
+
+[node name="PickupSound" type="AudioStreamPlayer" parent="." unique_id=1216251717]
+stream = ExtResource("2_mgj4e")
+
+[node name="InHandModel" type="TextureRect" parent="." unique_id=1853756856]
+offset_left = 2734.8843
+offset_top = 692.12366
+offset_right = 3873.5583
+offset_bottom = 2313.9023
+rotation = -0.30194196
+texture = ExtResource("3_bstwh")

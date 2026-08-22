@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PolaroidCamera" format=3 uid="uid://d4kt0mo0l8h4b"]
+
+[ext_resource type="Script" uid="uid://8vjqrvmajldb" path="res://PolaroidCamera.cs" id="1_5rhmb"]
+[ext_resource type="PackedScene" uid="uid://ckgr11iyvq552" path="res://Scenes/interactables.tscn" id="1_ka4mc"]
+[ext_resource type="PackedScene" uid="uid://70bois1fdvpx" path="res://Resources/polaroid.tscn" id="2_ft34n"]
+[ext_resource type="Texture2D" uid="uid://dkmy1j58qjy1w" path="res://Assets/Polaroid/CameraThumbnail.png" id="3_bm6ao"]
+[ext_resource type="AudioStream" uid="uid://oqogr5g0xehi" path="res://Assets/CameraShutterCustom.mp3" id="4_4tm0d"]
+[ext_resource type="Resource" uid="uid://bhmsj8bphfif2" path="res://Resources/Polaroid.tres" id="5_jkes1"]
+[ext_resource type="AudioStream" uid="uid://cmrubokw4yw2t" path="res://Assets/CameraReady2.mp3" id="7_nhcrj"]
+[ext_resource type="AudioStream" uid="uid://dwhxt0mgbaeox" path="res://Assets/StillCharging.mp3" id="9_j041u"]
+
+[resource]
+script = ExtResource("1_5rhmb")
+polaroidTemplate = ExtResource("5_jkes1")
+item_name = "PolaroidCamera"
+icon = ExtResource("3_bm6ao")
+MeshScene = ExtResource("2_ft34n")
+isConsumable = false
+metadata/_custom_type_script = "uid://b2j7fviswcs7o"

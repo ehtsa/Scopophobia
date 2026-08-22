@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d2qpp7lbx84s8"]
+
+[node name="SettingsMenu" type="Control" unique_id=1378538584]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1550691654]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(3.17, 3.17)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2125293746]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1560981318]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Back"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/VBoxContainer" unique_id=942072713]
+layout_mode = 2

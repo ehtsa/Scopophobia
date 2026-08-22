@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://ckgr11iyvq552"]
+
+[ext_resource type="Script" uid="uid://usb1ix26mcc1" path="res://Interactables.cs" id="1_e63yg"]
+[ext_resource type="AudioStream" uid="uid://b0ex62sb3n14j" path="res://Assets/ItemGet.mp3" id="2_n4r2h"]
+
+[node name="Interactables" type="RigidBody3D" unique_id=247365961]
+script = ExtResource("1_e63yg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1601560740 groups=["Interactable"]]
+
+[node name="ItemGet" type="AudioStreamPlayer" parent="." unique_id=190369119]
+stream = ExtResource("2_n4r2h")

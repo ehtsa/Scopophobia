@@ -1,0 +1,15 @@
+WorldEnvironment
+MeshInstance3D
+Node3D
+Camera3D
+SubViewport
+TextureRect
+TextEdit
+Control
+AnimationPlayer
+AnimationTree
+AreaLight3D
+GPUParticles3D
+Area3D
+AudioStreamPlayer3D
+NavigationRegion3D

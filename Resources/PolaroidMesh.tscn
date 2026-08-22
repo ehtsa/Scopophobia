@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://najmyn8jqwv1"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_6bt34"]
+size = Vector2(5, 7)
+
+[node name="Node3D" type="Node3D" unique_id=1823595077]
+
+[node name="PhotoQuad" type="MeshInstance3D" parent="." unique_id=1335121929]
+transform = Transform3D(0.02703231, -0.013009773, 0, 0.013009773, 0.02703231, 0, 0, 0, 0.03, 0, 0.075, 0)
+mesh = SubResource("QuadMesh_6bt34")
