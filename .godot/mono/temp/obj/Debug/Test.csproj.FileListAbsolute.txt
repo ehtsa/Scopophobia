@@ -32,3 +32,4 @@ C:\Users\conra\Downloads\test\test\.godot\mono\temp\obj\Debug\refint\Test.dll
 C:\Users\conra\Downloads\test\test\.godot\mono\temp\obj\Debug\Test.pdb
 C:\Users\conra\Downloads\test\test\.godot\mono\temp\obj\Debug\Test.genruntimeconfig.cache
 C:\Users\conra\Downloads\test\test\.godot\mono\temp\obj\Debug\ref\Test.dll
+C:\Users\conra\Downloads\test\test\.godot\mono\temp\obj\Debug\Test.sourcelink.json

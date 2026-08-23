@@ -6,60 +6,32 @@ using System.Transactions;
 using Godot;
 using Microsoft.VisualBasic;
 
+/// <summary>
+/// This is the Player Class where things like the Controls to Player Stats are controlled. 
+/// </summary>
 public partial class Player : CharacterBody3D
 {
-	// All Sounds, grabbed in the ready function of each item --------------------------------------------------------------------------------
+	// ALL SOUNDS, grabbed in the ready function of each item --------------------------------------------------------------------------------
 	private AudioStreamPlayer _walkingSound; 
 	private AudioStreamPlayer _runningSound; 
 	private AudioStreamPlayer _windedSound; 
 	private AudioStreamPlayer _breathingSound;
 	private AudioStreamPlayer _windedClearSound; 
-
-	[Export] public AnimationPlayer _zoomAnimation; 
 	
-	// How fast the player moves in meters per second. --------------------------------------------------------------------------------
+	// PLAYER MOVEMENT and Crouching Instance Variables --------------------------------------------------------------------------------
 	[Export] public int Speed { get; set; } = 10;
 	[Export] public int CrouchSpeed { get; set; } = 5; 
-			 public int CrouchActionSpeed = 20; 
-			 private float default_height = 4.0f; 
-			 private float crouch_height = 1.5f;
-			 private CollisionShape3D _collisionShape; 
+			public int CrouchActionSpeed = 20; 
+			private float default_height = 4.0f; 
+			private float crouch_height = 1.5f;
+			private CollisionShape3D _collisionShape; 
+			private bool _isCrouched = false; 
+			private float _crouchValue = 2.0f; 
 	[Export] public int FallAcceleration { get; set; } = 75; // The downward acceleration when in the air, in meters per second squared.
 	[Export] public float JumpVelocity = 20f;
-	// FIRST-PERSON ADDITIONS --------------------------------------------------------------------------------
-	[Export] public float MouseSensitivity { get; set; } = 0.002f;
+
+	// SPRINTING Instance Variables --------------------------------------------------------------------------------
 	[Export] public float SprintMultiplier { get; set; } = 1.5f; // Added for cleaner scaling
-	[Export] public TextureRect _currentItem; 
-	[Export] public float FollowSpeed = 5.0f;
-
-	private Node3D _head;
-	[Export] private Camera3D _camera;
-	private float _cameraPitch = 0f; 
-
-	[Export] private Camera3D _PhotoCamera; 
-
-	private bool _isZoomed = false; 
-
-	private const float BASE_FOV = 75.0f; 
-	private const float SPRINT_FOV  = 2.5f; 
-
-	// Leaning Variables 
-	private float lean_angle =  15.0f; 
-	private float lean_offset = 1.0f; 
-	public float lean_speed  = 8.0f; 
-	public float target_lean = 0.0f; // -1 is left, 0 is normal, 1 is right 
-	public float current_lean = 0.0f; 
-	
-	private RayCast3D _seeCast; 
-	private GodotObject _lastInteractTarget = null;
-	private bool _lastTargetInteractable = false;
-	public bool isHoldingItem = false;
-	private Vector3 _targetVelocity = Vector3.Zero;
-	public const float _BOB_FREQ = 0.5f; 
-	public const float _BOB_AMP = 0.08f;
-	public float t_bob = 0.0f;
-
-	// Sprining Rules --------------------------------------------------------------------------------
 	private ColorRect _staminaBar;
 	private float _staminaBarMaxWidth;
 	private float _staminaBarOriginalX; // NEW: To remember where the center is
@@ -70,35 +42,68 @@ public partial class Player : CharacterBody3D
 	private float drain = 10.0f; 
 	private float regain = 5.0f;
 
-	// "Health" Rules ---------------------------------------------------------------------------------
+	// FIRST-PERSON Instance Variables--------------------------------------------------------------------------------
+	private Node3D _head; // Parent of all Player Camera (not item) things
+			[Export] public float MouseSensitivity { get; set; } = 0.002f;
+			[Export] private Camera3D _camera;
+			private float _cameraPitch = 0f; 
+			private const float BASE_FOV = 75.0f; 
+			private const float SPRINT_FOV  = 2.5f; 
+			private Vector3 _targetVelocity = Vector3.Zero;
+
+			public const float _BOB_FREQ = 0.5f; // Player Head bobbing 
+			public const float _BOB_AMP = 0.08f;
+			public float t_bob = 0.0f;
+
+			private RayCast3D _seeCast; // Used to see if any interactable is in front of current player. 
+			private GodotObject _lastInteractTarget = null;
+			private bool _lastTargetInteractable = false;
+			private Label _interactLabel;
+
+	// POLAROID CAMERA RELATED Instance Variables ------------------------------------------------------------------------------
+	[Export] private Camera3D _PhotoCamera; 
+	[Export] public AnimationPlayer _zoomAnimation; // Zoom Animation used for PhotoCamera
+	private bool _isZoomed = false; 
+	
+	// LEANING Instance Variables ------------------------------------------------------------------------------
+	private float lean_angle =  15.0f; 
+	private float lean_offset = 1.0f; 
+	public float lean_speed  = 8.0f; 
+	public float target_lean = 0.0f; // -1 is left, 0 is normal, 1 is right 
+	public float current_lean = 0.0f; 
+	
+	// HEALTH Rules ---------------------------------------------------------------------------------
 	[Export] private float MentalHealth { get; set; } = 100.0f; 
 	private Label _mentalHealthLabel; 
 	private float _currentDisplayedHealth = 100f;
-	private Tween _healthTween;
+	private Tween _healthTween; // Used for the animation of mental health going down 
 
-	// Misc Rules --------------------------------------------------------------------
-	[Export] public Main _mainNode; 
-	private bool _isCrouched = false; 
-	private float _crouchValue = 2.0f; 
-
-	[Export] public Inventory _inventory; 
-	[Export] public Viewmodel _viewmodel; // Drag your Viewmodel node onto this field in the Inspector
+	// MISC Instance Variables --------------------------------------------------------------------
+	[Export] public Main _mainNode; // For accessing Spawn Function  
+	[Export] public Inventory _inventory; // Player inventory 
+	[Export] public Viewmodel _viewmodel; // The actual visible item shown
 	public CanvasLayer _inventoryUI; 
- 
+	
 
-	private Label _interactLabel;
+	// ONE LINE FUNCTION ------------------------------------------------------------------------------------
+	public void textureShow(TextureRect texture){texture.Show(); }
+	public void textureHide(TextureRect texture){texture.Hide();}
+	public Camera3D GetCamera3D() => _camera;
+	public Camera3D GetPhotoCamera3D() => _PhotoCamera;
 
-	// In the future, make this generalized. We need to be able to pass a texture through. 
-
+	/// <summary>
+	/// As of 8.23.26, probably can be deleted. 
+	/// </summary>
 	public Node3D GetHeldItemMesh()
 	{
 		GD.Print(_viewmodel?.GetCurrentItemInstance());
 		return _viewmodel?.GetCurrentItemInstance();
 	} 
 
-	public void textureShow(TextureRect texture){texture.Show(); }
-	public void textureHide(TextureRect texture){texture.Hide();}
 
+	/// <summary>
+	/// Ready function of the Player File 
+	/// </summary>
 	public override void _Ready()
 	{
 		AddToGroup("player");
@@ -107,6 +112,7 @@ public partial class Player : CharacterBody3D
 		_camera = GetNode<Camera3D>("Head/Camera3D");
 		_PhotoCamera = GetNode<Camera3D>("Head/PolaroidPhotoRig/PhotoViewport/PhotoCamera");
 		_seeCast = GetNode<RayCast3D>("Head/Camera3D/SeeCast");
+
 		_walkingSound = GetNode<AudioStreamPlayer>("WalkingSound");
 		_runningSound = GetNode<AudioStreamPlayer>("RunningSound");
 		_breathingSound = GetNode<AudioStreamPlayer>("BreathingSound");
@@ -136,7 +142,6 @@ public partial class Player : CharacterBody3D
 
         // 2. Connect the signal
         _inventory.ItemDrop += drop_from_player;
-		
 		UpdateHealthText(_currentDisplayedHealth);
 
 		// Lock the mouse to the center of the screen
@@ -144,12 +149,14 @@ public partial class Player : CharacterBody3D
 	}
 
 
-	// Checks if we can zoom, and uses the current isZoomed boolean to allow us to zoom. 
+	/// <summary>
+	/// Checks if we can zoom, and uses the current isZoomed boolean to allow us to zoom.
+	/// </summary>
 	public void zoomChecker()
 	{
 		// Checks if the current item we have in the inventory is a Camera Type item. 
 		ItemData camera = _inventory._hotbar[_inventory._selectedSlot];
-		bool hasCamera = camera.item_name.Contains("Camera");
+		bool hasCamera = camera.item_name.Contains("Camera"); // How to Check if current Item is Camera 
 		if (hasCamera)
 		{
 			if(!_isZoomed)
@@ -169,23 +176,9 @@ public partial class Player : CharacterBody3D
 	}
 
 
-	public void useItem()
-	{
-		// Grab instance variables of the object
-		// Heal that amount ?  
-		GD.Print("Consumed Item.");
-		SetMentalHealth(5);
-		_currentItem = GetNode<TextureRect>("InHandModel");
-		_currentItem.Hide();
-		_currentItem.QueueFree(); // Make this a texture Hide in the future after getting instance variables of the item variables. 
-		isHoldingItem = false; 
-	}
-
-	public Camera3D GetCamera3D() => _camera;
-
-	public Camera3D GetPhotoCamera3D() => _PhotoCamera;
-
-	// Add an animation where it show sand doesn't show. 
+	/// <summary>
+	/// Sets the Mental Health Attribute and sets up the Animation for it to go down or up. 
+	/// </summary>
 	public void SetMentalHealth(float amount)
 	{
 		if (MentalHealth + amount > 100.0f)
@@ -234,6 +227,9 @@ public partial class Player : CharacterBody3D
 	}
 
 
+	/// <summary>
+	/// updates the Mental Health Label; Called in SetMentalHealth. 
+	/// </summary>
 	private void UpdateHealthText(float value)
 	{
 		// Keep our tracking variable perfectly synced with the animation
@@ -244,9 +240,12 @@ public partial class Player : CharacterBody3D
 	}
 	
 
+	/// <summary>
+	/// Handles all unhandledInput. Just FYI: This will only run if an unhandled input is detect. Not ran at every frame, unlike _Process(). 
+	/// </summary>
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		// Needs to be here for optimization (since Physics Process goes off every frame)
+		// For Mouse movement (Player Camera)
 		if (Input.MouseMode == Input.MouseModeEnum.Captured)
 		{
 			if (@event is InputEventMouseMotion mouseMotion)
@@ -262,7 +261,7 @@ public partial class Player : CharacterBody3D
 				_camera.Rotation = cameraRotation;
 
 
-				// OLD CODE HERE: 
+				// OLD CODE HERE, can be deleted after Alpha build. Put here just in case (8.23.26)
 				// _camera.RotateX(-mouseMotion.Relative.Y*MouseSensitivity);
 
                 // Vector3 cameraRotation = _camera.Rotation;
@@ -287,12 +286,14 @@ public partial class Player : CharacterBody3D
 				}
 			}
 		}
+
+		// Handles any player controls like leaning, pressing sprint, etc. 
 		if (!_mainNode.paused)
 		{
 			if (Input.IsActionJustPressed("press_shift") && !isWinded){	isSprinting = true; }
 			if (Input.IsActionJustReleased("press_shift")){isSprinting = false; }
-			if (Input.IsActionJustPressed("m_press")){SetMentalHealth(-5);}
-			if (Input.IsActionJustPressed("p_press")){_mainNode.spawn_mob();}
+			if (Input.IsActionJustPressed("m_press")){SetMentalHealth(-5);} // Debug to show mental health goes down. 
+			if (Input.IsActionJustPressed("p_press")){_mainNode.spawn_mob();} // spawns mob. 
 			//if (Input.IsActionJustPressed("left_click")){GD.Print($"HELLO THE SELECTED SLOT IS {_inventory._selectedSlot}");}
 			if (@event.IsActionPressed("left_click") && _inventory._selectedSlot != -1){GD.Print("USING THIS");_inventory.UseSelectedItem(this);}
 			if (@event.IsActionPressed("right_click")){GD.Print("ZOOM IN ");zoomChecker();}
@@ -304,8 +305,13 @@ public partial class Player : CharacterBody3D
 	}
 
 
+	/// <summary>
+	/// Main Physics Process. Called every frame, so be careful with what you put in here. 
+	/// </summary>
 	public override void _PhysicsProcess(double delta)
-	{	_interactLabel.Hide();
+	{	
+		// Code for being able to interact with items in this world. 
+		_interactLabel.Hide();
 		if (_seeCast.IsColliding())
 		{
 			var target = _seeCast.GetCollider();
@@ -334,7 +340,7 @@ public partial class Player : CharacterBody3D
 		float target_tilt = Mathf.DegToRad(-lean_angle * current_lean);
 		float target_offset = lean_offset * current_lean; 
  
-		// NOTE: The following code DOESN'T work because _camera.Rotation is NOT a variable. 
+		// NOTE: The following code DOESN'T work because _camera.Rotation is NOT a variable. Can be deleted after Alpha (as of 8.23.26)
 		//_camera.Rotation.Z = Mathf.Lerp(_camera.Rotation.Z, target_tilt, (float)delta*lean_speed); 
 		//_camera.Position.X = Mathf.Lerp(_camera.Position.X, target_offset, (float)delta*lean_speed);
  
@@ -366,14 +372,14 @@ public partial class Player : CharacterBody3D
 			capsuleShape.Height = Mathf.Clamp(newHeight, crouch_height, default_height);
 		}
  
+		// Inputs of going in cardinal directions. 
 		var direction = Vector3.Zero;
 		if (Input.IsActionPressed("move_right"))   direction.X += 1.0f;
 		if (Input.IsActionPressed("move_left"))    direction.X -= 1.0f;
 		if (Input.IsActionPressed("move_back"))    direction.Z += 1.0f;
 		if (Input.IsActionPressed("move_forward")) direction.Z -= 1.0f;
-		// The Jump Mechanic
 		
- 
+
 		if (direction != Vector3.Zero)
 		{
 			direction = direction.Normalized();
@@ -537,14 +543,15 @@ public partial class Player : CharacterBody3D
 			if (_runningSound.Playing) _runningSound.Stop();
 		}
 
-		
- 
- 
-		MoveAndSlide();
+
+		MoveAndSlide(); // Required in any Godot Movement. 
 		
 		}
 
 
+	/// <summary>
+	/// Handles the headbob that we see while walking or sprinting. 
+	/// </summary>
 	private Vector3 _headbob(float Time)
 	{
 		float z = _camera.Position.Z;
@@ -554,7 +561,9 @@ public partial class Player : CharacterBody3D
 		return pos;
 	}
 
-	
+	/// <summary>
+	/// Handles dropping an item at current position (with a slight offset just in case). As of 8.23.26, there is probably a bug where we can drop items through a wall. 
+	/// </summary>
 	public void  drop_from_player(ItemData item)
 	{
 		Vector3 forward = -_camera.GlobalTransform.Basis.Z;

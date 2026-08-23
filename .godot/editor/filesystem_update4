@@ -1,6 +1,3 @@
-res://Player.cs
-res://Scenes/Main.tscn
-res://Overlay.gdshader
 res://CharacterBody3d.cs
 res://HealingPills.cs
 res://Polaroid.cs
@@ -15,5 +12,6 @@ res://Mob.cs
 res://Main.cs
 res://PolaroidPhotoRig.cs
 res://Viewmodel.cs
+res://Player.cs
 res://HotbarUI.cs
 res://Inventory.cs

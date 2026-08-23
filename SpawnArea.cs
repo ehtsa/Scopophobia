@@ -1,19 +1,34 @@
 using Godot;
 using System;
 
+/// <summary>
+/// This is the SpawnArea class, used for spawning things in a randomly generated coordinate within the space, as seen in Main.cs
+/// </summary>
 public partial class SpawnArea : Area3D
 {
 	// Drag your object scene (e.g., enemy.tscn) into this slot in the Inspector
+	// NOTE: Anything with Export will be shown in the Godot Editor as a new item on the right. 
+	// For every node of SpawnArea, a new object to spawn will need to be dragged into this field. 
 	[Export] public PackedScene ObjectToSpawn { get; set; }
 
 	private CollisionShape3D _spawnArea;
 
+	/// <summary>
+	/// The Ready function of the Main Node. 
+	/// </summary>
+	/// <remarks>
+	/// NOTE: Ready functions are always ran at the top of the Node Initialization. 
+	/// Each GetNode...("Name") initializes the instance variables used throughout the rest of this code
+	/// </remarks> 
 	public override void _Ready()
 	{
 		// Cache the reference to the collision shape node
 		_spawnArea = GetNode<CollisionShape3D>("Area");
 	}
 
+	/// <summary>
+	/// Spawns random object by taking spawnArea shape, and generates a random X, Y, Z Coordinate set for the ObjectToSpawn to be spawned at. 
+	/// </summary>
 	public void SpawnRandomObject()
 	{
 		// Safety check to ensure a scene is assigned

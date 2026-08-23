@@ -1,6 +1,9 @@
 using Godot;
 using System;
 
+/// <summary>
+/// Inventory Class. Holds each slot and data for each item held in inventory. 
+/// </summary>
 public partial class Inventory : Node 
 {
 	// 2. Signals are defined using delegates and the [Signal] attribute.
