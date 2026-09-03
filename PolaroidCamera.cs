@@ -5,13 +5,18 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Godot;
 
+/// <summary>
+/// The main PolaroidCamera class who is a child of the ItemData Class. 
+/// </summary>
 [GlobalClass]
 public partial class PolaroidCamera : ItemData
 {
+	// Sounds ----
 	[Export] public AudioStream itemUseSound { get; set; } = GD.Load<AudioStream>("res://Assets/CameraShutterCustom.mp3");
 	[Export] public AudioStream stillChargingSound { get; set; } = GD.Load<AudioStream>("res://Assets/StillCharging.mp3");
 	[Export] public AudioStream readySound { get; set; } = GD.Load<AudioStream>("res://Assets/CameraReady2.mp3");
 
+	/// Flash related items ---- 
 	[Export] public float flashEnergy = 50.0f;
 	[Export] public float flashRange = 20.0f;
 	[Export] public float flashSpotAngle = 35.0f; // half-angle of the cone, in degrees
@@ -23,8 +28,9 @@ public partial class PolaroidCamera : ItemData
 	// undeveloped polaroid graphic — that's what shows in the hotbar for
 	// every photo now, since DevelopPhotoAsync no longer overwrites it.
 	[Export] public Polaroid polaroidTemplate;
-	[Export] public int maxPhotos = 20;
+	[Export] public int maxPhotos = 5; // May need to chnage this such that we check if there's an open slot. if not, we don't take a shot 
 
+	// Cool Down --- 
 	private const float CooldownDuration = 5.0f; // seconds
 	private bool _isOnCooldown = false;
 
@@ -37,6 +43,12 @@ public partial class PolaroidCamera : ItemData
 	public IReadOnlyList<Polaroid> Photos => _photos;
 	public event Action<Polaroid> PhotoTaken;
 
+	
+	/// <summary>
+	/// The overridden Use class inherited from the ItemData class. Takes a photo, trigger flash and audio. 
+	/// </summary>
+	/// <param name="player"></param>
+	/// <returns></returns>
 	public override bool Use(Player player)
 	{
 		if (_isOnCooldown)
@@ -74,6 +86,12 @@ public partial class PolaroidCamera : ItemData
 	}
 
 
+	/// <summary>
+	/// This the function that tracks whatever is captured in a photo, and its development.  
+	/// </summary>
+	/// <param name="player"></param>
+	/// <param name="cameraSlot"></param>
+	/// <returns></returns>
 	private async Task DevelopPhotoAsync(Player player, int cameraSlot)
 	{
 		GD.Print("CALLED DEVELOP");
@@ -98,7 +116,7 @@ public partial class PolaroidCamera : ItemData
 		// of whatever camera you pass in onto PhotoCamera; passing
 		// PhotoCamera itself would make that a self-assignment no-op.
 		ImageTexture snapshot = await rig.CapturePhotoAsync(player.GetCamera3D());
-		List<Mob> capturedMobs = rig.GetMobsInFrame(player.GetCamera3D());
+		List<Mob> capturedMobs = rig.GetMobsInFrame(player.GetCamera3D()); // Grabs list of all mobs captured in this photo. 
 		foreach (Mob mob in capturedMobs)
 		{
 			GD.Print("LINE:");
@@ -107,7 +125,7 @@ public partial class PolaroidCamera : ItemData
 		
 	
 		GD.Print("FINISHED AWAITING. ");
-		player._inventory.NotifyPhotoDeveloping(player._inventory.NextEmpty(), polaroidTemplate.icon, 3.08f);
+		player._inventory.NotifyPhotoDeveloping(player._inventory.NextEmpty(), polaroidTemplate.icon, 3.08f); // Signal to traack development
 
 		await ToSignal(player.GetTree().CreateTimer(3.08f), SceneTreeTimer.SignalName.Timeout);
 		var polaroid = (Polaroid)polaroidTemplate.Duplicate();
@@ -121,9 +139,9 @@ public partial class PolaroidCamera : ItemData
 		
 
 		GD.Print("ADDED PHOTOS TO LIST");
-
 		PhotoTaken?.Invoke(polaroid);
 
+		// Adds polaroid to inventory after development is done
 		Inventory inventory = player.GetNode<Inventory>("/root/Inventory");
 		if (inventory.AddItem(polaroid))
 		{
@@ -136,6 +154,11 @@ public partial class PolaroidCamera : ItemData
 		}
 	}
 
+
+	/// <summary>
+	/// Begins the cooldown of the Camera. 
+	/// </summary>
+	/// <param name="player"></param>
 	private void StartCooldown(Player player)
 	{
 		_isOnCooldown = true;
@@ -143,7 +166,7 @@ public partial class PolaroidCamera : ItemData
 		cooldownTimer.Timeout += () => 
 		{
 			_isOnCooldown = false;
-			Itemsfx.PlayOneShot(player, readySound);
+			Itemsfx.PlayOneShot(player, readySound); // When ready, plays ready sound. 
 		};
 	}
 }

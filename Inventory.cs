@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 /// <summary>
-/// Inventory Class. Holds each slot and data for each item held in inventory. 
+/// Inventory Class. Holds each slot and data for each item held in inventory, using HotbarUI.cs as a child class. 
 /// </summary>
 public partial class Inventory : Node 
 {
@@ -13,18 +13,26 @@ public partial class Inventory : Node
 	[Signal] public delegate void ItemDropEventHandler(ItemData item);
 	[Signal] public delegate void PhotoDevelopingEventHandler(int slotIndex, Texture2D texture, float duration);
 
-	public const int HotbarSize = 5; 
-	public ItemData[] _hotbar = new ItemData[HotbarSize]; 
+	public const int HotbarSize = 5; // Amount of Slots in Inventory 
+	public ItemData[] _hotbar = new ItemData[HotbarSize]; // An Array of ItemData representing Inventory/Hotbar system
 	public int _selectedSlot = 0; 
 
+	/// <summary>
+	/// Serves similar purpose to UnhandeledInput
+	/// </summary>
 	public void _input(InputEvent @event)
 	{
+		// Press G to Drop Item
 		if(Input.IsActionJustPressed("press_g"))
 		{
 			drop_item(_selectedSlot);
 		}
 	}
 
+
+	/// <summary>
+	/// Setter Method to add item to Inventory. Emits signal once added. 
+	/// </summary>
 	public bool AddItem(ItemData item)
 	{
 		for (int i = 0; i < HotbarSize; i++)
@@ -41,6 +49,10 @@ public partial class Inventory : Node
 		return false; 
 	}
 
+
+	/// <summary>
+	/// Finds next open (empty) slot in inventory 
+	/// </summary>
 	public int NextEmpty()
 	{
 		for (int i = 0; i < HotbarSize; i++)
@@ -53,6 +65,10 @@ public partial class Inventory : Node
 		return -1; 
 	}
 
+
+	/// <summary>
+	/// Given param index, this will change the current selected slot to be the index and emit signal. 
+	/// </summary>
 	public void SelectSlot(int index)
 	{
 		//GD.Print(index); 
@@ -60,6 +76,10 @@ public partial class Inventory : Node
 		EmitSignal(SignalName.SlotSelected, _selectedSlot);
 	}
 
+
+	/// <summary>
+	/// Sends out signal so item is spawned in from the Player.drop_from_player() function. 
+	/// </summary>
 	public void spawn_item(ItemData item)
 	{
 		// Don't instantiate here. Player.drop_from_player() is the single
@@ -69,33 +89,38 @@ public partial class Inventory : Node
 		EmitSignal(SignalName.ItemDrop, item);
 	}
 
-	// In your Inventory or UI script
-	// public void spawn_item(ItemData item)
-	// {
-	// 	// Remove the instantiation completely. Just emit the signal!
-	// 	EmitSignal(SignalName.ItemDrop, item);
-	// }
 
+	/// <summary>
+	/// Given the slot of a Polaroid Photo, this will send signal that a photoo is developing, at which index, and for how long.
+	/// Used in the PolaroidCamera.cs file.
+	/// </summary>
 	public void NotifyPhotoDeveloping(int slotIndex, Texture2D texture, float duration)
 	{
 		EmitSignal(SignalName.PhotoDeveloping, slotIndex, texture, duration);
 	}
 
+
+	/// <summary>
+	/// drops item at index slotIndex after g is pressed.
+	/// </summary>
 	public void drop_item(int slotIndex)
 	{
 		if (_hotbar[slotIndex] != null)
 		{
-			ItemData dropped_item = _hotbar[slotIndex];
-			spawn_item(dropped_item); 
-			_hotbar[slotIndex] = null; 
-			EmitSignal(SignalName.InventoryChanged);
+			ItemData dropped_item = _hotbar[slotIndex]; // Grab Item
+			spawn_item(dropped_item); // This will now signal to the Player.cs file that item dropped at slotINdex needs to spawn relative to player pos 
+			_hotbar[slotIndex] = null; // Empty the current slot
+			EmitSignal(SignalName.InventoryChanged); 
 			if (slotIndex == _selectedSlot)
 				EmitSignal(SignalName.SlotSelected, _selectedSlot);
 		}
 	}
 
-	// Same bookkeeping as drop_item, but no world object gets spawned.
-	// Used when an item is consumed (eaten, used up) rather than dropped.
+
+	/// <summary>
+	/// Similar to drop_item, but no world object gets spawned.
+	/// Used when an item is consumed (eaten, used up) rather than dropped.
+	/// </summary>
 	public void despawn_item(int slotIndex)
 	{
 		if (_hotbar[slotIndex] != null)
@@ -107,7 +132,10 @@ public partial class Inventory : Node
 		}
 	}
  
-	// Call this from wherever your "use item" input is handled.
+
+	/// <summary>
+	/// Calls the .Use function of the item (every item has this function) and despawns item.
+	/// </summary>
 	public void UseSelectedItem(Player player)
 	{
 		//GD.Print("THIS GOT CALLED");

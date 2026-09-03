@@ -2,9 +2,14 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+
+/// <summary>
+/// The Base Mob Class that accidentally turned into the Weeping Angel Code. Must change the name to Weeping Angel or something ilke that if you can. 
+/// Also, We need to template this class such that we can use it as a "resource" in Godot. 
+/// </summary>
 public partial class Mob : CharacterBody3D
 {
-	[Export] public MobData Data { get; set; }
+	[Export] public MobData Data { get; set; } // The basic information of this Mob. 
 	[Export] public float RotationSpeed { get; set; } = 5f; // higher = snappier turn
 	[Export] public NavigationAgent3D NavigationAgent { get; set; }
 	[Export] public float VelocityChange { get; set; }
