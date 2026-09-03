@@ -35,6 +35,10 @@ public partial class Mob : CharacterBody3D
 
 	private bool isSeen; 
 
+
+	/// <summary>
+	/// Ready function of the Mob Class. 
+	/// </summary>
 	public override void _Ready()
 	{
 		player = GetTree().GetFirstNodeInGroup("player") as Player;
@@ -43,6 +47,7 @@ public partial class Mob : CharacterBody3D
 		jumpscareSting = GetNode<AudioStreamPlayer3D>("JumpScareSound");
 		randomSpeed = GD.RandRange((int) Data.MinSpeed, (int) Data.MaxSpeed);
 
+		// An Attempt at making the mob disappear after it was revealed that it is a mob. 
 		if (SmokeParticlesPath != null)
 			_smokeParticles = GetNode<GpuParticles3D>(SmokeParticlesPath);
 			
@@ -52,6 +57,11 @@ public partial class Mob : CharacterBody3D
 		spawnSting.Play(); 
 	}
 
+
+	/// <summary>
+	/// Puts mobs at level 1 if they are real, level 2 if they're fake.  
+	/// Done so we don't have to manually put the levels. 
+	/// </summary>
 	private void ApplyRealityLayer()
 	{
 		// visualRoot = the MeshInstance3D / model root, not the CharacterBody3D itself
@@ -60,11 +70,17 @@ public partial class Mob : CharacterBody3D
 		GD.Print(visualRoot);
 	}
 
+
+	/// <summary>
+	/// Physics process (called every frame i think)
+	/// </summary>
+	/// <param name="delta"></param>
 	public override void _PhysicsProcess(double delta)
 	{
 		Move(delta);
-		
 	}
+
+
 	// AVOIDANCE IS ON AND WILL BE NEEDED TO ACCOUNT FOR: 
 	// One thing to flag in case you hit it later: if you've turned on Avoidance on your 
 	// NavigationAgent3D (for mobs steering around each other or obstacles), the recommended 
@@ -72,11 +88,23 @@ public partial class Mob : CharacterBody3D
 	// and then read the actual movement velocity back from the VelocityComputed signal, 
 	// rather than using GetNextPathPosition() directly. Not needed if avoidance is off, but 
 	// worth knowing if mobs start clipping through each other and you want them to route around one another.
+
+	/// <summary>
+	/// The main move function. Takes in delta for time. Follows the navigation path until it reaches the player. 
+	/// </summary>
+	/// <remarks>
+	/// AVOIDANCE IS ON AND WILL BE NEEDED TO ACCOUNT FOR: 
+	/// One thing to flag in case you hit it later: if you've turned on Avoidance on your 
+	/// NavigationAgent3D (for mobs steering around each other or obstacles), the recommended 
+	/// Godot 4 pattern is a bit different — you call NavigationAgent.SetVelocity(desiredVelocity) 
+	/// and then read the actual movement velocity back from the VelocityComputed signal, 
+	/// rather than using GetNextPathPosition() directly. Not needed if avoidance is off, but 
+	/// worth knowing if mobs start clipping through each other and you want them to route around one another.
+	/// </remarks>
+	/// <param name="delta"></param>
 	public virtual void Move(double delta)
 	{
-
-		
-		if (player == null) 
+		if (player == null) // used for debugging
 		{
 			//GD.Print("You are NULL as FUCK.");
 			return;
@@ -86,33 +114,43 @@ public partial class Mob : CharacterBody3D
 
 		if (NavigationAgent.IsTargetReached())
 		{
-			this.Velocity = Vector3.Zero;
-			GD.Print("Boo");
-			jumpscareSting.Play(); 
-			MoveAndSlide();
+			this.Velocity = Vector3.Zero; // stands still 
+			GD.Print("Boo"); // this is the super scary jumpscare indicator 
+			jumpscareSting.Play(); // plays sound
+			MoveAndSlide(); // maybe get rid of this ? 
+			// Need to implement a jumpscare animation
 			return;
 		}
 
+		// If the player isn't looking at the mob
 		if (isSeen == false)
 		{
-			LookAtPlayer((float)delta);
-			Vector3 desiredVelocity = (NavigationAgent.GetNextPathPosition() - GlobalPosition).Normalized() * randomSpeed;
-			Velocity = Velocity.Lerp(desiredVelocity, VelocityChange * (float)delta);
+			LookAtPlayer((float)delta); // look at them
+			Vector3 desiredVelocity = (NavigationAgent.GetNextPathPosition() - GlobalPosition).Normalized() * randomSpeed; // randomized speed, in the direction of the navgiation agent
+			Velocity = Velocity.Lerp(desiredVelocity, VelocityChange * (float)delta); // Velocity
 			MoveAndSlide();
 		}
 		UpdateFootsteps(delta);
 	}
 
 
+	/// <summary>
+	/// Default to nothing but maybe we'll use for animation
+	/// </summary>
+	/// <param name="player"></param>
 	public virtual void Attack(Player player)
 	{
 		// default, or leave empty
 	}
 
 
+	/// <summary>
+	/// Function to look at the player
+	/// </summary>
+	/// <param name="delta"></param>
 	protected void LookAtPlayer(float delta)
 	{
-		//GD.Print("Dayumm... I'm looking at you.");
+		//GD.Print("Ou shiii... I'm looking at you.");
 		Vector3 targetPos = player.GlobalPosition;
 		targetPos.Y = GlobalPosition.Y; // yaw only, no tilt
 
@@ -132,14 +170,15 @@ public partial class Mob : CharacterBody3D
 			NavigationAgent.TargetPosition = lastPlayerPosition;
 		}
 
-		
-
 		Vector3 desiredVelocity = (NavigationAgent.GetNextPathPosition() - GlobalPosition).Normalized() * randomSpeed;
 		this.Velocity = Velocity.Lerp(desiredVelocity, VelocityChange * (float)delta);
 		MoveAndSlide();
 	}
 
 
+	/// <summary>
+	/// Updates the NavigationAgent helper so the mob can have a clear path to the player. 
+	/// </summary>
 	private void UpdateNavigationTarget()
 	{
 		if (lastPlayerPosition.DistanceTo(player.GlobalPosition) > 0.5f || lastEnemyPosition.DistanceTo(GlobalPosition) > 0.5f)
@@ -151,6 +190,10 @@ public partial class Mob : CharacterBody3D
 	}
 
 
+	/// <summary>
+	/// Plays the footstep sound if speed > 0 and footsteptimer went off. Uss footsteptimer for intervals between steps. 
+	/// </summary>
+	/// <param name="delta"></param>
 	private void UpdateFootsteps(double delta)
 	{
 		float speed = Velocity.Length();
@@ -171,7 +214,13 @@ public partial class Mob : CharacterBody3D
 		}
 	}
 
-	// This function will be called from the Main scene.
+	
+	/// <summary>
+	/// This function gets called by the main scene to initialize a mob. 
+	/// Takes care of mob looking at the player the moment it spawns. 
+	/// </summary>
+	/// <param name="startPosition"></param>
+	/// <param name="playerPosition"></param>
 	public void Initialize(Vector3 startPosition, Vector3 playerPosition)
 	{
 		// We position the mob by placing it at startPosition
@@ -191,6 +240,9 @@ public partial class Mob : CharacterBody3D
 	}
 
 
+	/// <summary>
+	/// Failed method. Hoping to get the mob to vanish with smoke but it won't work
+	/// </summary>
 	public void TriggerVanish()
 	{
 		// Fade every mesh part under ModelMeshPath to nothing over VanishFadeDuration, then free.
@@ -208,6 +260,12 @@ public partial class Mob : CharacterBody3D
 		
 	}
 
+
+	/// <summary>
+	/// Grabs all mesh instances, i think used for deletion
+	/// </summary>
+	/// <param name="root"></param>
+	/// <param name="results"></param>
 	private static void CollectMeshInstances(Node3D root, List<GeometryInstance3D> results)
 	{
 		if (root == null)
@@ -224,7 +282,9 @@ public partial class Mob : CharacterBody3D
 	}
 
 
-	//Commented, but saving this for future mobs. 
+	/// <summary>
+	/// A connected signal that signifies when the mob is off the screen. 
+	/// </summary>
 	private void _on_visible_on_screen_notifier_3d_screen_exited()
 	{
 		GD.Print("hehe i'm creeping on you...");
@@ -233,6 +293,9 @@ public partial class Mob : CharacterBody3D
 	}	
 
 
+	/// <summary>
+	/// A connected signal that signifies when the mob is on the screen. Makes mob movement 0. 
+	/// </summary>
 	private void _on_visible_on_screen_notifier_3d_screen_entered()
 	{
 		GD.Print("oh shi Why you looking at me cuh.");
@@ -241,7 +304,10 @@ public partial class Mob : CharacterBody3D
 		Velocity = Vector3.Zero;
 	}
 
-
+	/// <summary>
+	/// Signal for when player collision area enters the mob area. 
+	/// </summary>
+	/// <param name="node"></param>
 	private void _on_area_3d_body_entered(Node3D node)
 	{
 		if (node == player)
@@ -257,6 +323,10 @@ public partial class Mob : CharacterBody3D
 		}
 	}
 
+
+	/// <summary>
+	/// TriggersVanish when photographed. I believe this is also failed method. 
+	/// </summary>
 	public virtual void OnPhotographed()
 	{
 		GD.Print("TRIGGERING VANISH BITCH");

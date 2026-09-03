@@ -8,16 +8,19 @@ using System.Collections.Generic;
 //   PolaroidPhotoRig (this script)
 //   └── PhotoViewport (SubViewport)
 //       └── PhotoCamera (Camera3D, Cull Mask = layer 1 only)
-//
-// Leave PhotoViewport's "Own World 3D" OFF — that's what lets PhotoCamera
-// see the same level as the main view camera without duplicating any nodes.
-// Real mobs should render on layer 1, hallucinated ones (MobData.IsReal ==
-// false) on layer 2 — PhotoCamera's cull mask then naturally excludes them.
+
+/// <summary>
+/// Leave PhotoViewport's "Own World 3D" OFF. This class allows any polaroid camera to see out of the same view as the main camera without any 
+/// node duplication. Make Real Mobs layer 1, and any False mobs be on layer 2. 
+/// </summary>
 public partial class PolaroidPhotoRig : Node
 {
-	[Export] public SubViewport PhotoViewport;
-	[Export] public Camera3D PhotoCamera;
+	[Export] public SubViewport PhotoViewport; // This is the actual rectangular view of the main camera used for the photo i think
+	[Export] public Camera3D PhotoCamera; // the 
 
+	/// <summary>
+	/// Ready function of the PolaroidPhotoRig Class. 
+	/// </summary>
 	public override void _Ready()
 	{
 		// Same "find me via group" pattern your mobs already use to find
@@ -27,6 +30,11 @@ public partial class PolaroidPhotoRig : Node
 		GD.Print($"Added to photo_rig! Path: {GetPath()}");
 	}
 
+	/// <summary>
+	/// This grabs the actual photo of what's in front of you. 
+	/// </summary>
+	/// <param name="viewCam"></param>
+	/// <returns></returns>
 	public async Task<ImageTexture> CapturePhotoAsync(Camera3D viewCam)
 	{
 		GD.Print($"viewCam at: {viewCam.GlobalTransform.Origin}");
@@ -49,7 +57,13 @@ public partial class PolaroidPhotoRig : Node
 	}
 
 	
-
+	/// <summary>
+	/// Anything within the view of the main camera, it will check if it's a mob 
+	/// and if it is, it will be put in a list. This is used to get rid of any fake mobs after 
+	/// photo rendering is complete.
+	/// </summary>
+	/// <param name="camera"></param>
+	/// <returns></returns>
 	public  List<Mob> GetMobsInFrame(Camera3D camera)
 	{
 		var captured = new List<Mob>();
