@@ -1,6 +1,9 @@
 using Godot;
 using System;
 
+/// <summary>
+/// THis is the class that helps us spawn in our items in the in-game world. 
+/// </summary>
 public partial class Interactables : RigidBody3D
 {
 	// 1. @onready in C# is typically assigned inside the _Ready() method.
@@ -10,6 +13,9 @@ public partial class Interactables : RigidBody3D
 	[Export] public ItemData ItemData { get; set; }
 	[Export] public AudioStreamPlayer ItemGet;
 
+	/// <summary>
+	/// Ready function of the interactable class. 
+	/// </summary>
 	public override void _Ready()
 	{
 		// Equivalent to: @onready var mesh_instance_node = $MeshInstance3D
@@ -28,6 +34,9 @@ public partial class Interactables : RigidBody3D
 		}
 	}
 
+	/// <summary>
+	/// Used for when Player RayCast hovers over item in-game. Adds to inventory if interacted with. 
+	/// </summary>
 	public void Interact()
 	{
 		// 3. Fetching the Inventory Autoload (Singleton)
@@ -45,8 +54,12 @@ public partial class Interactables : RigidBody3D
 		}
 	}
 
-	// 5. C# requires strict typing, so we specify 'Node' as the argument 
-	// and 'MeshInstance3D' as the return type.
+	/// <summary>
+	/// . C# requires strict typing, so we specify 'Node' as the argument 
+	/// and 'MeshInstance3D' as the return type.
+	/// </summary>
+	/// <param name="node"></param>
+	/// <returns></returns>
 	private MeshInstance3D FindFirstMeshInstance(Node node)
 	{
 		// Pattern matching in C# makes checking types very clean
@@ -67,7 +80,7 @@ public partial class Interactables : RigidBody3D
 		return null;
 	}
 
-	// 6. We specify that the 'scene' argument is a PackedScene
+	/// This spawns item in the world with collision.
 	private Node3D SpawnItemWithCollision(PackedScene scene)
 	{
 		if (scene == null) return null;

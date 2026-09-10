@@ -1,30 +1,31 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1787512783
+::res://::1788645589
 Building.tscn::PackedScene::5752233114532489237::1784431717::0::1::::<><><>0<>0<><>::uid://des6y7k7gs4ec::::res://Assets/Building/AureedBuilding.fbx
 CameraFlashFx.cs::CSharpScript::4245748356033789333::1784935527::0::1::::<><><>0<>0<><>::
-CharacterBody3d.cs::CSharpScript::2510264454226380447::1783176713::0::1::::<>CharacterBody3D<><>0<>0<><>::
+CharacterBody3d.cs::CSharpScript::2510264454226380447::1788645588::0::1::::<>CharacterBody3D<><>0<>0<><>::
 CreatureModel.tscn::PackedScene::5213987688982215274::1784500954::0::1::::<><><>0<>0<><>::uid://td3wl50g2efk::::res://Assets/Breaking News HD!!1!111!!!1!.fbx
-DummyItem.cs::CSharpScript::5157430929845456354::1784419378::0::1::::<>StaticBody3D<><>0<>0<><>::
-HealingPills.cs::CSharpScript::7192800396173303996::1784931354::0::1::::HealingPills<>ItemData<><>0<>0<><>::
-HotbarUI.cs::CSharpScript::33356488252912873::1785049469::0::1::::<>HBoxContainer<><>0<>0<><>::
-Interactables.cs::CSharpScript::1441043276953977046::1785013151::0::1::::<>RigidBody3D<><>0<>0<><>::
-Inventory.cs::CSharpScript::2231758106713926519::1785619361::0::1::::<>Node<><>0<>0<><>::
-ItemData.cs::CSharpScript::4302051850640690630::1784933171::0::1::::ItemData<>Resource<><>0<>0<><>::
+DummyItem.cs::CSharpScript::5157430929845456354::1788645588::0::1::::<>StaticBody3D<><>0<>0<><>::
+HealingPills.cs::CSharpScript::7192800396173303996::1788645588::0::1::::HealingPills<>ItemData<><>0<>0<><>::
+HotbarUI.cs::CSharpScript::33356488252912873::1788645588::0::1::::<>HBoxContainer<><>0<>0<><>::
+Interactables.cs::CSharpScript::1441043276953977046::1788645588::0::1::::<>RigidBody3D<><>0<>0<><>::
+Inventory.cs::CSharpScript::2231758106713926519::1788645588::0::1::::<>Node<><>0<>0<><>::
+ItemData.cs::CSharpScript::4302051850640690630::1787751920::0::1::::ItemData<>Resource<><>0<>0<><>::
 Itemsfx.cs::CSharpScript::1445689620385558241::1784426732::0::1::::<><><>0<>0<><>::
-Main.cs::CSharpScript::1817060939931745638::1785213150::0::1::::<>Node<><>0<>0<><>::
-Mob.cs::CSharpScript::2262617150563161613::1785213471::0::1::::<>CharacterBody3D<><>0<>0<><>::
+Main.cs::CSharpScript::1817060939931745638::1788645589::0::1::::<>Node<><>0<>0<><>::
+Mob.cs::CSharpScript::2262617150563161613::1788645513::0::1::::<>CharacterBody3D<><>0<>0<><>::
 MobData.cs::CSharpScript::3831261035441216727::1784501680::0::1::::MobData<>Resource<><>0<>0<><>::
-Overlay.gdshader::Shader::770702384441307580::1785620901::0::1::::<><><>0<>0<><>::
+Overlay.gdshader::Shader::770702384441307580::1788645031::0::1::::<><><>0<>0<><>::
 Oxycodone.fbx::PackedScene::7784989019570593711::1783808409::1783808451::1::::<><><>0<>0<>a881ea8345ed6e02c621c1fa8a663dd8<>res://.godot/imported/Oxycodone.fbx-cffa9ae1077e6894c4d8c24c8622eab6.scn::uid://555lsf7wicd5::::res://PillBottleColor.png
-PauseMenu.cs::CSharpScript::6985545132550237269::1783572665::0::1::::<>Control<><>0<>0<><>::
-Player.cs::CSharpScript::3784617815086534236::1785621141::0::1::::<>CharacterBody3D<><>0<>0<><>::
-Polaroid.cs::CSharpScript::7955306534791734910::1785112899::0::1::::Polaroid<>ItemData<><>0<>0<><>::
-PolaroidCamera.cs::CSharpScript::2360159724411137307::1785617867::0::1::::PolaroidCamera<>ItemData<><>0<>0<><>::
-PolaroidPhotoRig.cs::CSharpScript::4902387139148467084::1785112187::0::1::::<>Node<><>0<>0<><>::
+PauseMenu.cs::CSharpScript::6985545132550237269::1788645589::0::1::::<>Control<><>0<>0<><>::
+Player.cs::CSharpScript::3784617815086534236::1788645589::0::1::::<>CharacterBody3D<><>0<>0<><>::
+Polaroid.cs::CSharpScript::7955306534791734910::1788645589::0::1::::Polaroid<>ItemData<><>0<>0<><>::
+PolaroidCamera.cs::CSharpScript::2360159724411137307::1788645589::0::1::::PolaroidCamera<>ItemData<><>0<>0<><>::
+PolaroidPhotoRig.cs::CSharpScript::4902387139148467084::1788645589::0::1::::<>Node<><>0<>0<><>::
 polaroid_photo.gdshader::Shader::5368064264568226412::1785046338::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1787361088::0::1::::<><><>0<>0<><>::
-SpawnArea.cs::CSharpScript::8637367132927967812::1783661139::0::1::::<>Area3D<><>0<>0<><>::
-Viewmodel.cs::CSharpScript::3561117878338212493::1785112892::0::1::::<>Node3D<><>0<>0<><>::
+Smitten.cs::CSharpScript::3594711879253489623::1788645589::0::1::::<><><>0<>0<><>::
+SpawnArea.cs::CSharpScript::8637367132927967812::1788645589::0::1::::<>Area3D<><>0<>0<><>::
+Viewmodel.cs::CSharpScript::3561117878338212493::1788645589::0::1::::<>Node3D<><>0<>0<><>::
 ::res://art/::1784075438
 body.tres::StandardMaterial3D::-1::1783176717::0::1::::<><><>0<>0<><>::
 eye.tres::StandardMaterial3D::-1::1783176717::0::1::::<><><>0<>0<><>::
@@ -64,9 +65,10 @@ player.glb::PackedScene::8964461739428881931::1783176717::1783176717::1::::<><><
 pupil.tres::StandardMaterial3D::-1::1783176717::0::1::::<><><>0<>0<><>::
 ゲージ回復3 (1).mp3::AudioStreamMP3::5828301880754464748::1783370399::1783370400::1::::<><><>0<>0<>7138440ca14e9b1ac12db47a0a3d4496<>res://.godot/imported/ゲージ回復3 (1).mp3-843bb6e48c1ae978f5c5bb1efae68a44.mp3str::
 魔力に満ちた部屋.mp3::AudioStreamMP3::2772758864190798678::1783915354::1783915354::1::::<><><>0<>0<>d2324f6205c1840744dffb0a77d5b02c<>res://.godot/imported/魔力に満ちた部屋.mp3-601948fd852855e51890c8464793e5b9.mp3str::
-::res://Assets/::1787361449
+::res://Assets/::1788645783
 AnotherSettingsPage.mp3::AudioStreamMP3::360058809637671050::1783370500::1784074714::1::::<><><>0<>0<>62ef04505418f8c777ef09228e9b5cdf<>res://.godot/imported/AnotherSettingsPage.mp3-7e60052e2bdda548e9bace3604f18a3c.mp3str::
 Breaking News HD!!1!111!!!1!.fbx::ArrayMesh::1341521150894117020::1784500404::1785009234::1::::<><><>0<>0<>13a794f22bb28092d439f12827197c54<>res://.godot/imported/Breaking News HD!!1!111!!!1!.fbx-5f0fa3acb4942301d4d23e729b94cced.res::
+build-up-31356.mp3::AudioStreamMP3::821114059504565287::1788645783::1788645793::1::::<><><>0<>0<>1fcd84b6905f7884929564426410fa3c<>res://.godot/imported/build-up-31356.mp3-9bf449fd0a59e15d4fb7aedf4246099d.mp3str::
 CameraReady2.mp3::AudioStreamMP3::5651418790325090001::1784932203::1784932204::1::::<><><>0<>0<>5c87903fbbe29a9299d04348df73ad48<>res://.godot/imported/CameraReady2.mp3-3e4b5e38b167976c06c9c82f6bbe8a7d.mp3str::
 CameraShutterCustom2.mp3::AudioStreamMP3::7061730087814641469::1785044709::1785044713::1::::<><><>0<>0<>b63b07a508ff272a251fd858d98aad6b<>res://.godot/imported/CameraShutterCustom2.mp3-5b62b6d7af321337a9dd153a9ec8f292.mp3str::
 CameraShutterCustom.mp3::AudioStreamMP3::1016535547207584398::1784929831::1784932207::1::::<><><>0<>0<>4bbd92e13765b09dc143ac8cb009b9b1<>res://.godot/imported/CameraShutterCustom.mp3-0af3039199606c458a2247b878e81a7d.mp3str::
@@ -246,14 +248,15 @@ Polaroid.tres::Resource/Polaroid::2903625835729436317::1785047009::0::1::::<><><
 polaroid.tscn::PackedScene::2297738607557391761::1785050115::0::1::::<><><>0<>0<><>::uid://buiwkbfx1ik65::::res://Assets/Polaroid/Polaroid.glb
 PolaroidCamera.tres::Resource/PolaroidCamera::9216581214892380239::1785049809::0::1::::<><><>0<>0<><>::uid://8vjqrvmajldb::::res://PolaroidCamera.cs<>uid://ckgr11iyvq552::::res://Scenes/interactables.tscn<>uid://70bois1fdvpx::::res://Resources/polaroid.tscn<>uid://dkmy1j58qjy1w::::res://Assets/Polaroid/CameraThumbnail.png<>uid://oqogr5g0xehi::::res://Assets/CameraShutterCustom.mp3<>uid://bhmsj8bphfif2::::res://Resources/Polaroid.tres<>uid://cmrubokw4yw2t::::res://Assets/CameraReady2.mp3<>uid://dwhxt0mgbaeox::::res://Assets/StillCharging.mp3
 PolaroidMesh.tscn::PackedScene::913024131911089836::1785047022::0::1::::<><><>0<>0<><>::
-::res://Scenes/::1785620901
+::res://Scenes/::1788645103
 DummyItem.tscn::PackedScene::7838439888772523300::1784074768::0::1::::<><><>0<>0<><>::uid://cfqkes18mf3kw::::res://DummyItem.cs<>uid://bedpasv5sgbrw::::res://Assets/fart-with-reverb_NcgStsA.mp3<>uid://di6dvqkl4rpyl::::res://Oxycodone.fbx<>uid://bx37teduhey7c::::res://Assets/catholding.webp
 ground.scn::PackedScene::1839376743988507328::1784508622::0::1::::<><><>0<>0<><>::uid://0hf3l3nuwf2f::::res://Assets/kanye.jpg<>uid://cfd504qlw4yry::::res://art/Pisht_SC2.fbx<>uid://dhp88kicn521d::::res://Assets/building-set/source/Diorama.fbx
 interactables.tscn::PackedScene::5488196068894158687::1784931048::0::1::::<><><>0<>0<><>::uid://usb1ix26mcc1::::res://Interactables.cs<>uid://b0ex62sb3n14j::::res://Assets/ItemGet.mp3
 inventory.tscn::PackedScene::6047281279652406103::1785619656::0::1::::<><><>0<>0<><>::uid://x7rx11jhsxq6::::res://Scenes/inventory_slot.tscn<>uid://62cy23dlb5v4::::res://Inventory.cs<>uid://qfm2hqtu7kf::::res://HotbarUI.cs
 inventory_slot.tscn::PackedScene::1681478160132526523::1785618827::0::1::::<><><>0<>0<><>::
-Main.tscn::PackedScene::2647030037025229859::1785620901::0::1::::<><><>0<>0<><>::uid://dad7bc4523ujr::::res://Scenes/Player.tscn<>uid://05gy02mhtxys::::res://Main.cs<>uid://dtkljihx4rxyh::::res://Scenes/Mob.tscn<>uid://c8j3xkhhtymcy::::res://Scenes/PauseMenu.tscn<>uid://dc635w0sdcpfb::::res://Assets/settingsPageOpened.mp3<>uid://1hajb1glnmyi::::res://Scenes/ground.scn<>uid://dsvoq5uf7xw8f::::res://Assets/skyscraper_seven-click-buttons-ui-menu-sounds-effects-button-14-205402.mp3<>uid://djw87vqk0junc::::res://Scenes/DummyItem.tscn<>uid://dvcaf7ae7qcjk::::res://SpawnArea.cs<>uid://bfre6y85djxs5::::res://art/魔力に満ちた部屋.mp3<>uid://d4kt0mo0l8h4b::::res://Resources/PolaroidCamera.tres<>uid://ckgr11iyvq552::::res://Scenes/interactables.tscn<>uid://devc7ma0rme13::::res://Resources/pills.tres
+Main.tscn::PackedScene::2647030037025229859::1788645030::0::1::::<><><>0<>0<><>::uid://dad7bc4523ujr::::res://Scenes/Player.tscn<>uid://05gy02mhtxys::::res://Main.cs<>uid://dtkljihx4rxyh::::res://Scenes/Mob.tscn<>uid://c8j3xkhhtymcy::::res://Scenes/PauseMenu.tscn<>uid://dc635w0sdcpfb::::res://Assets/settingsPageOpened.mp3<>uid://1hajb1glnmyi::::res://Scenes/ground.scn<>uid://dsvoq5uf7xw8f::::res://Assets/skyscraper_seven-click-buttons-ui-menu-sounds-effects-button-14-205402.mp3<>uid://djw87vqk0junc::::res://Scenes/DummyItem.tscn<>uid://dvcaf7ae7qcjk::::res://SpawnArea.cs<>uid://bfre6y85djxs5::::res://art/魔力に満ちた部屋.mp3<>uid://d4kt0mo0l8h4b::::res://Resources/PolaroidCamera.tres<>uid://ckgr11iyvq552::::res://Scenes/interactables.tscn<>uid://devc7ma0rme13::::res://Resources/pills.tres
 Mob.tscn::PackedScene::8514178248892987531::1785286823::0::1::::<><><>0<>0<><>::uid://7ia8d3b8rhur::::res://Mob.cs<>uid://td3wl50g2efk::::res://Assets/Breaking News HD!!1!111!!!1!.fbx<>uid://but5kr1tj3sux::::res://MobData.cs<>uid://d2x38p38xpwo2::::res://Assets/hit-low-gravity-absorber-cinematic-trailer-sound-effects-124761.mp3<>uid://dq35tr7wd41ts::::res://Assets/HeavyFootsteps.mp3<>uid://c3tyh648t8848::::res://Assets/JumpScarePlaceHolder1.mp3
 PauseMenu.tscn::PackedScene::7109394292676610332::1784078792::0::1::::<><><>0<>0<><>::uid://c6r354lrg0bnp::::res://PauseMenu.cs<>uid://feod7c36kacg::::res://Assets/AnotherSettingsPage.mp3
 Player.tscn::PackedScene::7167400065150210339::1785619324::0::1::::<><><>0<>0<><>::uid://bt6kdqpw5gke3::::res://Player.cs<>uid://d0ypm0v45pwdv::::res://art/player.glb<>uid://bq0bddnmjv3bd::::res://Viewmodel.cs<>uid://dm48a1mlqbmd7::::res://Assets/砂利の上を歩く.mp3<>uid://k8lmdfjuac17::::res://Overlay.gdshader<>uid://b2vi6bsc4pfbv::::res://Assets/アスファルトの上を走る1.mp3<>uid://cj2wgaxtt077u::::res://Assets/freesound_community-labored-breathing-sleeping-73258.mp3<>uid://cb30unr2p7lnw::::res://PolaroidPhotoRig.cs<>uid://nb57w2vgmsnv::::res://Assets/金属バットで打つ1.mp3<>uid://dgpqgoh0jtg7k::::res://Assets/風鈴1.mp3<>uid://ikmm651n3pg4::::res://Assets/SolidBlack.webp<>uid://ck8k612k3ra4w::::res://Assets/PolaroidViewFinder3.png
+Smitten.tscn::PackedScene::7599588920257625557::1788645103::0::1::::<><><>0<>0<><>::uid://brhkm5wgqr3ip::::res://Smitten.cs<>uid://but5kr1tj3sux::::res://MobData.cs<>uid://td3wl50g2efk::::res://Assets/Breaking News HD!!1!111!!!1!.fbx<>uid://d2x38p38xpwo2::::res://Assets/hit-low-gravity-absorber-cinematic-trailer-sound-effects-124761.mp3<>uid://dq35tr7wd41ts::::res://Assets/HeavyFootsteps.mp3<>uid://c3tyh648t8848::::res://Assets/JumpScarePlaceHolder1.mp3
 SettingsMenu.tscn::PackedScene::9088330112988759889::1783372345::0::1::::<><><>0<>0<><>::

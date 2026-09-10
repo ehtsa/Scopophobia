@@ -1,5 +1,8 @@
 using Godot;
 
+/// <summary>
+/// This is the subdata used for all Mobs in this game. They are typically exported to the Godot Component Panel so you can edit them manually there. 
+/// </summary>
 [GlobalClass]
 public partial class MobData : Resource
 {

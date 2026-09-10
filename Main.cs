@@ -110,7 +110,8 @@ public partial class Main : Node
 	/// </remarks>
 	public void spawn_mob()
 	{
-		Mob mob = MobScene.Instantiate<Mob>();
+		//Mob mob = MobScene.Instantiate<Mob>();
+		Smitten mob = MobScene.Instantiate<Smitten>(); 
 		mob.AddToGroup("mobs"); // Adds the instantiated mob to a group called Mobs. See the Mob.cs to understand more. 
 		var mobSpawnLocation = GetNode<PathFollow3D>("SpawnPath/SpawnLocation"); // The slash here is very much like directory slashes. SpawnLocation is in SpawnPath. 
 		mobSpawnLocation.ProgressRatio = GD.Randf(); // A Random Location on the SpawnLocation Path. Think of Progress Ratio as a percentage on a line, where 1.0 is one end, and 0.0 is the other. 
@@ -128,6 +129,7 @@ public partial class Main : Node
 	{
 		if (!debug){
 			Mob mob = MobScene.Instantiate<Mob>();
+			//Smitten mob = MobScene.Instantiate<Smitten>(); 
 
 			var mobSpawnLocation = GetNode<PathFollow3D>("SpawnPath/SpawnLocation");
 			mobSpawnLocation.ProgressRatio = GD.Randf();

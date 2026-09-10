@@ -38,9 +38,9 @@ public partial class PolaroidPhotoRig : Node
 	public async Task<ImageTexture> CapturePhotoAsync(Camera3D viewCam)
 	{
 		GD.Print($"viewCam at: {viewCam.GlobalTransform.Origin}");
-        PhotoCamera.GlobalTransform = viewCam.GlobalTransform;
-        PhotoCamera.Fov = viewCam.Fov;
-        GD.Print($"PhotoCamera now at: {PhotoCamera.GlobalTransform.Origin}");
+		PhotoCamera.GlobalTransform = viewCam.GlobalTransform;
+		PhotoCamera.Fov = viewCam.Fov;
+		GD.Print($"PhotoCamera now at: {PhotoCamera.GlobalTransform.Origin}");
 
 		PhotoViewport.RenderTargetUpdateMode = SubViewport.UpdateMode.Once;
 

@@ -37,7 +37,7 @@ public partial class DummyItem : StaticBody3D
 
 		playerNode.AddChild(newItemForPlayer);
 		// 4. Update the player's internal state
-		playerNode.isHoldingItem = true;
+		//playerNode.isHoldingItem = true;
 
 		await ToSignal(_pickupSound, AudioStreamPlayer.SignalName.Finished);
 		this.QueueFree();

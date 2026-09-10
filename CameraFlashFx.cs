@@ -1,10 +1,13 @@
 using Godot;
 
-// Standalone helper, same shape as Itemsfx — hand it any Node3D that's
-// currently in the tree and it hangs a temporary SpotLight3D off it.
-// Parenting the light to the actual item mesh (rather than the view camera)
-// means it automatically tracks that mesh's position/rotation every frame —
-// no manual per-frame syncing needed.
+/// <summary>
+/// Standalone helper, same shape as Itemsfx — hand it any Node3D that's
+/// currently in the tree and it hangs a temporary SpotLight3D off it.
+/// Parenting the light to the actual item mesh (rather than the view camera)
+/// means it automatically tracks that mesh's position/rotation every frame —
+/// no manual per-frame syncing needed.
+/// </summary>
+
 public static class CameraFlashFx
 {
     public static void Trigger(Node3D attachTo, float peakEnergy = 50.0f, float range = 20.0f, float spotAngleDegrees = 20.0f, float duration = 5.0f)

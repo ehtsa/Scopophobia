@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://dgjkeb2fabrmr"]
+
+[ext_resource type="Script" uid="uid://brhkm5wgqr3ip" path="res://Smitten.cs" id="1_ead5y"]
+[ext_resource type="Script" uid="uid://but5kr1tj3sux" path="res://MobData.cs" id="2_bqmdp"]
+[ext_resource type="ArrayMesh" uid="uid://td3wl50g2efk" path="res://Assets/Breaking News HD!!1!111!!!1!.fbx" id="3_gd6h1"]
+[ext_resource type="AudioStream" uid="uid://d2x38p38xpwo2" path="res://Assets/hit-low-gravity-absorber-cinematic-trailer-sound-effects-124761.mp3" id="4_7rnyx"]
+[ext_resource type="AudioStream" uid="uid://lx0vmwiqxb4r" path="res://Assets/build-up-31356.mp3" id="5_ead5y"]
+[ext_resource type="AudioStream" uid="uid://c3tyh648t8848" path="res://Assets/JumpScarePlaceHolder1.mp3" id="6_0u02u"]
+
+[sub_resource type="Resource" id="Resource_grg3l"]
+script = ExtResource("2_bqmdp")
+DisplayName = "Weeping Angel"
+MaxSpeed = 30.0
+metadata/_custom_type_script = "uid://but5kr1tj3sux"
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qaf44"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_das2q"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_88dyv"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_1j0qt"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_u0piq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u40of"]
+radius = 1.045
+height = 3.04
+
+[node name="Smitten" type="CharacterBody3D" unique_id=1322526234 node_paths=PackedStringArray("NavigationAgent")]
+script = ExtResource("1_ead5y")
+Data = SubResource("Resource_grg3l")
+NavigationAgent = NodePath("NavigationAgent3D")
+VelocityChange = 10.0
+
+[node name="SmokeParticles" type="GPUParticles3D" parent="." unique_id=1195418211]
+transform = Transform3D(1, 0, 7.1054274e-15, 0, 1, 0, -7.1054274e-15, 0, 1, -0.078277595, 5.9604645e-08, 0.04931641)
+emitting = false
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_qaf44")
+draw_passes = 4
+draw_pass_1 = SubResource("QuadMesh_das2q")
+draw_pass_2 = SubResource("BoxMesh_88dyv")
+draw_pass_3 = SubResource("SphereMesh_1j0qt")
+draw_pass_4 = SubResource("CylinderMesh_u0piq")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=478568110]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07827759, 0, 0.049316406)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1126057548]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38, 0)
+shape = SubResource("CapsuleShape3D_u40of")
+
+[node name="Pivot" type="Node3D" parent="." unique_id=3454863]
+
+[node name="Character" type="MeshInstance3D" parent="Pivot" unique_id=973662326]
+transform = Transform3D(-1, 8.742278e-08, -1.0425061e-15, 0, 1.1924881e-08, 1, 8.742278e-08, 1, -1.1924881e-08, 0, 0, 0)
+layers = 2
+mesh = ExtResource("3_gd6h1")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." unique_id=132756821]
+aabb = AABB(-1.2400897, -1, -2.0308514, 2.4801793, 2, 4.0617027)
+
+[node name="SpawnSound" type="AudioStreamPlayer" parent="." unique_id=785929198]
+stream = ExtResource("4_7rnyx")
+
+[node name="StalkingSound" type="AudioStreamPlayer3D" parent="." unique_id=984242442]
+stream = ExtResource("5_ead5y")
+
+[node name="JumpScareSound" type="AudioStreamPlayer3D" parent="." unique_id=1212368141]
+stream = ExtResource("6_0u02u")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1665809026]
+avoidance_enabled = true
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]

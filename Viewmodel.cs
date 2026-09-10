@@ -1,9 +1,12 @@
 using Godot;
 using System;
 
+/// <summary>
+/// This is the class that helps us show the items in game on the right hand side. 
+/// </summary>
 public partial class Viewmodel : Node3D 
 {
-	private Node3D _currentItemInstance = null;
+	private Node3D _currentItemInstance = null; // Represents item held in hand 
 	
 	// Reference to your inventory autoload
 	private Inventory _inventory;
@@ -23,6 +26,10 @@ public partial class Viewmodel : Node3D
 		_inventory.SlotSelected += UpdateHeldItem;
 	}
 	
+	/// <summary>
+	/// Process function of the ViewModel Class. Used for the Polaroid Class. 
+	/// </summary>
+	/// <param name="delta"></param>
 	public override void _Process(double delta)
 	{
 		if (_developingPolaroid != null && _currentItemInstance != null)
@@ -49,12 +56,19 @@ public partial class Viewmodel : Node3D
 		}
 	}
 
+	/// <summary>
+	/// Used in the polaroid.cs class for the polaroid shaking class. 
+	/// </summary>
+	/// <param name="verticalPixelsMoved"></param>
 	public void ApplyShakeWobble(float verticalPixelsMoved)
 	{
 		float offset = _shakeWobbleOffset - verticalPixelsMoved * ShakeWobbleSensitivity;
 		_shakeWobbleOffset = Mathf.Clamp(offset, -ShakeWobbleMaxOffset, ShakeWobbleMaxOffset);
 	}
 
+	/// <summary>
+	/// Clears the current item in hand, used for making room for the next item to be held. 
+	/// </summary>
 	public void ClearItem()
 	{
 		// C# requires explicit null checks instead of 'if (current_item_instance)'
@@ -67,6 +81,11 @@ public partial class Viewmodel : Node3D
 		_shakeWobbleOffset = 0f; 
 	}
 
+
+	/// <summary>
+	/// Show the current item being held. 
+	/// </summary>
+	/// <param name="itemData"></param>
 	public void ShowItem(ItemData itemData)
 	{
 		ClearItem();
@@ -103,6 +122,10 @@ public partial class Viewmodel : Node3D
 		}
 	}
 
+	/// <summary>
+	/// The function that connects the inventory to the ShowItem function. 
+	/// </summary>
+	/// <param name="slotIndex"></param>
 	private void UpdateHeldItem(int slotIndex)
 	{
 		// Access the public Hotbar array we set up in the inventory script

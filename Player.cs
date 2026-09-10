@@ -264,9 +264,9 @@ public partial class Player : CharacterBody3D
 				// OLD CODE HERE, can be deleted after Alpha build. Put here just in case (8.23.26)
 				// _camera.RotateX(-mouseMotion.Relative.Y*MouseSensitivity);
 
-                // Vector3 cameraRotation = _camera.Rotation;
-                // cameraRotation.X = Mathf.Clamp(cameraRotation.X, Mathf.DegToRad(-90f), Mathf.DegToRad(90f));
-                // _camera.Rotation = cameraRotation;
+				// Vector3 cameraRotation = _camera.Rotation;
+				// cameraRotation.X = Mathf.Clamp(cameraRotation.X, Mathf.DegToRad(-90f), Mathf.DegToRad(90f));
+				// _camera.Rotation = cameraRotation;
 
 				// Shake-to-develop-faster: while holding left click on a
 				// not-yet-fully-developed Polaroid, vertical mouse motion

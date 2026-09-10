@@ -1,6 +1,9 @@
 using System;
 using Godot;
 
+/// <summary>
+/// This is the HealingPills class, a subclass of ItemData. 
+/// </summary>
 [GlobalClass]
 public partial class HealingPills : ItemData
 {
@@ -8,7 +11,11 @@ public partial class HealingPills : ItemData
 	[Export] public AudioStream itemUseSound { get; set; } = GD.Load<AudioStream>("res://Assets/PillSwallow.mp3");
 	
 
-	// This will allow the player to get healed for a random int from 5-10
+	/// <summary>
+	/// This will allow the player to get healed for a random int from 5-10
+	/// </summary>
+	/// <param name="player"></param>
+	/// <returns></returns>
 	public override bool Use(Player player)
 	{
 		Random rand = new Random(); 

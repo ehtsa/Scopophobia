@@ -1,6 +1,9 @@
 using Godot;
 using System;
 
+/// <summary>
+/// This is the PauseMenu! Still under development (need to make settings page.)
+/// </summary>
 public partial class PauseMenu : Control
 {
 	// 1. Changed the type from 'Node' to 'Main'
@@ -8,6 +11,9 @@ public partial class PauseMenu : Control
 	[Export] public Main MainNode;
 	[Export] private AudioStreamPlayer _hoverSound; 
 
+	/// <summary>
+	/// Ready function; grabs main node and grabs hover sound for when mouse hovers over buttons. 
+	/// </summary>
 	public override void _Ready()
 	{
 		// 2. We cast this as <Main> instead of <Node>
@@ -15,6 +21,9 @@ public partial class PauseMenu : Control
 		_hoverSound = GetNode<AudioStreamPlayer>("HoverSound");
 	}
 	
+	/// <summary>
+	/// Shows menu from the main node. 
+	/// </summary>
 	private void _on_resume_pressed()
 	{
 		// 3. Now C# knows this is the Main script, and allows your custom method!
