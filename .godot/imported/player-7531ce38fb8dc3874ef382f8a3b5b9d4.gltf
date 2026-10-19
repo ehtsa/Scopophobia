@@ -1,6 +1,6 @@
 {
 	"asset":{
-		"generator":"Khronos glTF Blender I/O v5.1.20",
+		"generator":"Khronos glTF Blender I/O v5.2.40",
 		"version":"2.0"
 	},
 	"extensionsUsed":[
@@ -15,22 +15,22 @@
 				{
 					"color":[
 						1,
-						1,
-						1
-					],
-					"intensity":2.3930001258850098,
-					"type":"directional",
-					"name":"Sun"
-				},
-				{
-					"color":[
-						1,
 						0.8567734360694885,
 						0.21838948130607605
 					],
 					"intensity":13.480423194181194,
 					"type":"point",
 					"name":"Point"
+				},
+				{
+					"color":[
+						1,
+						1,
+						1
+					],
+					"intensity":2.3930001258850098,
+					"type":"directional",
+					"name":"Sun"
 				}
 			]
 		}
@@ -54,10 +54,6 @@
 	],
 	"nodes":[
 		{
-			"mesh":0,
-			"name":"Sphere.001"
-		},
-		{
 			"camera":0,
 			"name":"Camera",
 			"rotation":[
@@ -78,25 +74,6 @@
 					"light":0
 				}
 			},
-			"name":"Sun",
-			"rotation":[
-				-0.6974031329154968,
-				-0.13392680883407593,
-				0.13321341574192047,
-				0.6913369297981262
-			],
-			"translation":[
-				-2.4861862659454346,
-				3.8680386543273926,
-				0
-			]
-		},
-		{
-			"extensions":{
-				"KHR_lights_punctual":{
-					"light":1
-				}
-			},
 			"name":"Point",
 			"rotation":[
 				-0.7071068286895752,
@@ -108,6 +85,29 @@
 				1.8962974548339844,
 				-0.34048575162887573,
 				-0.598291277885437
+			]
+		},
+		{
+			"mesh":0,
+			"name":"Sphere.001"
+		},
+		{
+			"extensions":{
+				"KHR_lights_punctual":{
+					"light":1
+				}
+			},
+			"name":"Sun",
+			"rotation":[
+				-0.6974031329154968,
+				-0.13392680883407593,
+				0.13321341574192047,
+				0.6913369297981262
+			],
+			"translation":[
+				-2.4861862659454346,
+				3.8680386543273926,
+				0
 			]
 		}
 	],
@@ -169,7 +169,7 @@
 	],
 	"meshes":[
 		{
-			"name":"Mesh",
+			"name":"Sphere.001",
 			"primitives":[
 				{
 					"attributes":{

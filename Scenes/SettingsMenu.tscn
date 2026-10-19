@@ -1,5 +1,30 @@
 [gd_scene format=3 uid="uid://d2qpp7lbx84s8"]
 
+[sub_resource type="FontVariation" id="FontVariation_vip0n"]
+
+[sub_resource type="DPITexture" id="DPITexture_ul6ph"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#fefefe\" fill-opacity=\".75\"/></svg>
+"
+base_scale = 2.6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dros"]
+content_margin_top = 15.0
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="DPITexture" id="DPITexture_8uw7q"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><rect width=\"14\" height=\"14\" x=\"1\" y=\"1\" fill=\"#fff\" fill-opacity=\".75\" rx=\"2.333\"/><path fill=\"#1a1a1a\" d=\"m11.5 3.75-5.6 5.6-1.7-1.7-1.5 1.5 3.2 3.2 7.1-7.1z\"/></svg>
+"
+base_scale = 4.0
+
+[sub_resource type="DPITexture" id="DPITexture_bxjf0"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><rect width=\"14\" height=\"14\" x=\"1\" y=\"1\" fill=\"#1a1a1a\" fill-opacity=\".5\" rx=\"2.333\"/></svg>
+"
+fix_alpha_border = true
+base_scale = 4.0
+
 [node name="SettingsMenu" type="Control" unique_id=1378538584]
 layout_mode = 3
 anchors_preset = 15
@@ -8,19 +33,72 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1550691654]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=621074643]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(3.17, 3.17)
+offset_right = 3980.0
+offset_bottom = 2155.0
+color = Color(0.085244976, 0.0852449, 0.08524492, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2125293746]
-layout_mode = 2
+[node name="GridContainer" type="GridContainer" parent="." unique_id=968813473]
+layout_mode = 0
+offset_right = 3960.0
+offset_bottom = 341.0
+theme_override_constants/h_separation = 250
+theme_override_constants/v_separation = 100
+columns = 2
 
-[node name="Back" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1560981318]
+[node name="Back" type="Button" parent="GridContainer" unique_id=1560981318]
+custom_maximum_size = Vector2(500, -1)
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+size_flags_stretch_ratio = 0.79
+theme_override_fonts/font = SubResource("FontVariation_vip0n")
+theme_override_font_sizes/font_size = 80
 text = "Back"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/VBoxContainer" unique_id=942072713]
+[node name="Settings" type="Label" parent="GridContainer" unique_id=82253006]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 100
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="MasterVolume" type="Label" parent="GridContainer" unique_id=1017986489]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(100, 0)
+theme_override_font_sizes/font_size = 60
+text = "Master Volume"
+
+[node name="HSlider" type="HSlider" parent="GridContainer" unique_id=942072713]
+custom_minimum_size = Vector2(200, 200)
+custom_maximum_size = Vector2(1000, 500)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_icons/grabber = SubResource("DPITexture_ul6ph")
+theme_override_styles/slider = SubResource("StyleBoxFlat_8dros")
+rounded = true
+
+[node name="FullScreenToggle" type="Label" parent="GridContainer" unique_id=3049247]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(100, 0)
+theme_override_font_sizes/font_size = 60
+text = "Full Screen"
+
+[node name="CheckBox" type="CheckBox" parent="GridContainer" unique_id=983044592]
+layout_mode = 2
+theme_override_icons/checked = SubResource("DPITexture_8uw7q")
+theme_override_icons/unchecked = SubResource("DPITexture_bxjf0")
+button_pressed = true
+
+[node name="Resolution" type="Label" parent="GridContainer" unique_id=1725102543]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(100, 40)
+theme_override_font_sizes/font_size = 60
+text = "Resolution
+"
+
+[node name="MenuButton" type="MenuButton" parent="GridContainer" unique_id=202301211]
 layout_mode = 2
